@@ -1,13 +1,19 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <AppBar />
     <router-view />
   </div>
 </template>
+<script>
+import AppBarBase from "./components/AppBar.vue";
+import { withFirebase } from "./components/HOC/FirebaseProvider";
 
+const AppBar = withFirebase(AppBarBase);
+
+export default {
+  components: { AppBar }
+};
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -15,12 +21,13 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  padding: 0;
+  margin: 0;
 }
 
-#nav {
-  padding: 30px;
+html {
+  background-color: #111;
 }
-
 #nav a {
   font-weight: bold;
   color: #2c3e50;
