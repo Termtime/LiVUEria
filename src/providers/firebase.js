@@ -41,7 +41,6 @@ export class Firebase {
     return this._loginWithProvider(this.googleProvider);
   };
 
-  loginWithFacebook = () => {};
   signOut = () => {
     return this.auth.signOut();
   };

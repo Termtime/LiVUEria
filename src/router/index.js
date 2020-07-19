@@ -1,14 +1,21 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import HomePage from "../views/HomePage.vue";
-
+import BooksPage from "../views/HomePage.vue";
+import LoginPage from "../views/LoginPage.vue";
+import LandingPage from "../views/LandingPage.vue";
+import { withFirebase } from "../components/HOC/FirebaseProvider.js";
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: HomePage
+    name: "Landing",
+    component: LandingPage
+  },
+  {
+    path: "/books",
+    name: "Books",
+    component: BooksPage
   },
   {
     path: "/about",
@@ -18,6 +25,11 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue")
+  },
+  {
+    path: "/signin",
+    name: "Sign in",
+    component: withFirebase(LoginPage)
   }
 ];
 

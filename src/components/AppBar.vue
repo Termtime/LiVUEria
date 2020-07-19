@@ -1,7 +1,9 @@
 <template>
   <div id="nav text-white">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
-      <a class="navbar-brand" href="#">LiVUEria</a>
+      <span class="navbar-brand router-link" @click="$router.push('/')"
+        >LiVUEria</span
+      >
       <button
         class="navbar-toggler"
         type="button"
@@ -17,8 +19,8 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#"
-              >Home <span class="sr-only">(current)</span></a
+            <span class="nav-link router-link" @click="$router.push('books')"
+              >Home <span class="sr-only">(current)</span></span
             >
           </li>
           <li class="nav-item">
@@ -53,10 +55,23 @@
             >
           </li>
         </ul>
-        <button class="btn btn-outline-primary my-2 my-sm-0" v-on:click="login">
-          Log In
-        </button>
-        &nbsp;
+
+        <div class="inline-right-margin">
+          <button
+            class="btn btn-primary my-2 my-sm-0"
+            @click="$router.push('signin')"
+          >
+            Log In
+          </button>
+        </div>
+        <div class="inline-right-margin">
+          <button
+            class="btn btn-info my-2 my-sm-0"
+            @click="$router.push('signup')"
+          >
+            Sign Up
+          </button>
+        </div>
         <form class="form-inline my-2 my-lg-0">
           <input
             class="form-control mr-sm-2"
@@ -64,7 +79,7 @@
             placeholder="Search"
             aria-label="Search"
           />
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+          <button class="btn btn-success my-2 my-sm-0" type="submit">
             Search
           </button>
         </form>
@@ -76,11 +91,6 @@
 <script>
 export default {
   name: "AppBar",
-  props: ["firebase"],
-  methods: {
-    login() {
-      this.firebase.loginWithGoogle();
-    }
-  }
+  props: ["firebase"]
 };
 </script>
