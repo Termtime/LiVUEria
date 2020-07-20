@@ -1,7 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import BooksPage from "../views/HomePage.vue";
+import BooksPage from "../views/BooksPage.vue";
 import LoginPage from "../views/LoginPage.vue";
+import SignUpPage from "../views/SignUpPage.vue";
 import LandingPage from "../views/LandingPage.vue";
 import { withFirebase } from "../components/HOC/FirebaseProvider.js";
 Vue.use(VueRouter);
@@ -30,6 +31,11 @@ const routes = [
     path: "/signin",
     name: "Sign in",
     component: withFirebase(LoginPage)
+  },
+  {
+    path: "/signup",
+    name: "Sign up",
+    component: withFirebase(SignUpPage)
   }
 ];
 

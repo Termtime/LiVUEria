@@ -54,7 +54,14 @@ html {
   background-color: #111;
 }
 
-.router-link{
+.link {
   cursor: pointer;
+}
+.loginCard {
+  width: 400px;
+  margin: 100px 100px 20px 100px;
+  padding: 20px;
+  text-align: left;
+  border-radius: 5px;
 }
 </style>
