@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <h1>LiVUEria</h1>
-    <small>El lugar donde vue y los libros se combinan</small>
+    <small>Where Vue and books meet</small>
     <div class="section-divider">
       <h2 class="left">Favorites</h2>
       <div class="divider">
@@ -11,7 +11,7 @@
 
     <div class="section">
       <div class="card-container">
-        <div class="card reactive-card" style="width: 18rem;">
+        <div class="card reactive-card shadow" style="width: 18rem;">
           <img src="../assets/logo.png" class="card-img-top" alt="..." />
           <div class="card-body text-left">
             <h5 class="card-title text-dark">Card title</h5>
@@ -37,7 +37,7 @@
 // import HelloWorld from "@/components/HelloWorld.vue";
 
 export default {
-  name: "HomePage",
+  name: "BooksPage",
   components: {}
 };
 </script>
@@ -78,7 +78,7 @@ export default {
 }
 
 .reactive-card:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
 .card-container {

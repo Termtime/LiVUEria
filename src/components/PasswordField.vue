@@ -6,6 +6,7 @@
       type="password"
       v-on:input="handleInput"
       :value="passState.pass"
+      required
     />
     <small class="text-danger">{{ passState.error }}</small>
   </div>

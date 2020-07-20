@@ -1,9 +1,7 @@
 <template>
   <div id="nav text-white">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
-      <span class="navbar-brand router-link" @click="$router.push('/')"
-        >LiVUEria</span
-      >
+      <span class="navbar-brand link" @click="$router.push('/')">LiVUEria</span>
       <button
         class="navbar-toggler"
         type="button"
@@ -19,16 +17,39 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <span class="nav-link router-link" @click="$router.push('books')"
-              >Home <span class="sr-only">(current)</span></span
+            <span
+              v-if="Boolean(loggedUser)"
+              class="nav-link link"
+              v-on:click="handleHomeClick"
+              >My Books <span class="sr-only">(current)</span></span
             >
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Library</a>
           </li>
-          <li class="nav-item dropdown">
+        </ul>
+        <div v-if="!Boolean(loggedUser)" class="r">
+          <div class="inline-right-margin">
+            <button
+              class="btn btn-primary my-2 my-sm-0"
+              @click="$router.push('signin')"
+            >
+              Log In
+            </button>
+          </div>
+          <div class="inline-right-margin">
+            <button
+              class="btn btn-info my-2 my-sm-0"
+              @click="$router.push('signup')"
+            >
+              Sign Up
+            </button>
+          </div>
+        </div>
+        <div class="r inline-right-margin" v-else>
+          <li class="nav-item dropdown list-unstyled">
             <a
-              class="nav-link dropdown-toggle"
+              class="btn btn-primary dropdown-toggle"
               href="#"
               id="navbarDropdown"
               role="button"
@@ -36,41 +57,23 @@
               aria-haspopup="true"
               aria-expanded="false"
             >
-              Dropdown
+              {{
+                isAuthReady
+                  ? loggedUser.displayName == null
+                    ? loggedUser.email.substring(
+                        0,
+                        loggedUser.email.indexOf("@")
+                      )
+                    : loggedUser.displayName
+                  : null
+              }}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
+              <span class="dropdown-item link" v-on:click="logout"
+                >Log out</span
+              >
             </div>
           </li>
-          <li class="nav-item">
-            <a
-              class="nav-link disabled"
-              href="#"
-              tabindex="-1"
-              aria-disabled="true"
-              >Disabled</a
-            >
-          </li>
-        </ul>
-
-        <div class="inline-right-margin">
-          <button
-            class="btn btn-primary my-2 my-sm-0"
-            @click="$router.push('signin')"
-          >
-            Log In
-          </button>
-        </div>
-        <div class="inline-right-margin">
-          <button
-            class="btn btn-info my-2 my-sm-0"
-            @click="$router.push('signup')"
-          >
-            Sign Up
-          </button>
         </div>
         <form class="form-inline my-2 my-lg-0">
           <input
@@ -91,6 +94,35 @@
 <script>
 export default {
   name: "AppBar",
-  props: ["firebase"]
+  data: function() {
+    return {
+      isAuthReady: false,
+      unsubListener: null,
+      loggedUser: null
+    };
+  },
+  props: ["firebase"],
+  methods: {
+    handleHomeClick() {
+      this.$router.push("books");
+    },
+    logout() {
+      this.firebase.signOut().then(() => this.$router.push("signin"));
+    }
+  },
+  mounted() {
+    this.unsubListener = this.firebase.auth.onAuthStateChanged(user => {
+      if (user) {
+        this.loggedUser = user;
+      } else {
+        this.loggedUser = null;
+      }
+      this.isAuthReady = true;
+    });
+  },
+  beforeDestroy() {
+    //desuscribir el listener para evitar memory leaks y errores
+    this.unsubListener();
+  }
 };
 </script>
