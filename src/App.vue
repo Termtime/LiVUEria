@@ -64,4 +64,9 @@ html {
   text-align: left;
   border-radius: 5px;
 }
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
 </style>
