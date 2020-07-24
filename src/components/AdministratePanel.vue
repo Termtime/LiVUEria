@@ -14,7 +14,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">
+            <h5 class="modal-title text-dark" id="staticBackdropLabel">
               Administrar Libros
             </h5>
             <button
@@ -27,7 +27,42 @@
             </button>
           </div>
           <div class="modal-body">
-            ...
+            <!--CUERPO MODAL-->
+            <ul class="nav nav-tabs">
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  href="#agregar"
+                  data-toggle="tab"
+                  aria-controls="agregar"
+                  aria-selected="true"
+                  >Agregar</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="#editarEliminar"
+                  data-toggle="tab"
+                  aria-controls="editarEliminar"
+                  aria-selected="false"
+                  >Editar/Eliminar</a
+                >
+              </li>
+            </ul>
+            <!--CONTENIDO MODAL-->
+            <div class="tab-content" id="myTabContent">
+              <div
+                class="tab-pane fade show active"
+                id="agregar"
+                role="tabpanel"
+              >
+                <FormularioAgregarLibro />
+              </div>
+              <div class="tab-pane fade" id="editarEliminar" role="tabpanel">
+                adios
+              </div>
+            </div>
           </div>
           <div class="modal-footer">
             <button
@@ -37,7 +72,7 @@
             >
               Cerrar
             </button>
-            <button type="button" class="btn btn-primary">Understood</button>
+            <button type="button" class="btn btn-primary">Finalizar</button>
           </div>
         </div>
       </div>
@@ -45,7 +80,14 @@
   </div>
 </template>
 <script>
+import FormularioAgregarLibroBase from "../components/FormularioAgregarLibro.vue";
+import { withFirebase } from "../components/HOC/FirebaseProvider.js";
+
+const FormularioAgregarLibro = withFirebase(FormularioAgregarLibroBase);
 export default {
-  name: "AdministratePanel"
+  name: "AdministratePanel",
+  components:{
+    FormularioAgregarLibro
+  }
 };
 </script>
