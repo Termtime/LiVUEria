@@ -1,5 +1,5 @@
 <template>
-  <button type="submit" class="btn btn-primary" :disabled="disabled">
+  <button type="submit" class="btn btn-primary" v-bind:disabled="disabled">
     {{ label }}
   </button>
 </template>

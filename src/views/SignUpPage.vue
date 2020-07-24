@@ -2,8 +2,8 @@
   <div class="col bg-super-dark">
     <div class="row center">
       <div class="loginCard bg-dark">
-        <h1 class="center">Sign up</h1>
-        <small>To enjoy our website the most!</small>
+        <h1 class="center">Regístrate</h1>
+        <small>Para disfrutar nuestro sitio al máximo</small>
         <hr color="white" />
         <form v-on:submit="handleSubmit">
           <EmailTextField
@@ -13,13 +13,14 @@
           <br />
           <PasswordField
             :passState="passState"
+            label="Contraseña:"
             v-on:change="pass => setPass(pass)"
           />
           <br />
           <PasswordField
             :passState="passState2"
             v-on:change="pass => setPass2(pass)"
-            label="Confirm password:"
+            label="Confirma la contraseña:"
           />
           <br />
           <SubmitButton
@@ -28,7 +29,7 @@
                 ? true
                 : false
             "
-            label="Log in"
+            label="Regístrate"
           />
         </form>
       </div>
@@ -77,11 +78,13 @@ export default {
       } else {
         this.passState = {
           pass: p1,
-          error: "Password must not be empty and both fields must match"
+          error:
+            "La contraseña no debe ser vacia y ambos campos deben ser iguales"
         };
         this.passState2 = {
           pass: p2,
-          error: "Password must not be empty and both fields must match"
+          error:
+            "La contraseña no debe ser vacia y ambos campos deben ser iguales"
         };
       }
     },
@@ -100,14 +103,17 @@ export default {
           if (error.code === "auth/wrong-password") {
             this.passState = {
               ...this.passState,
-              error: "Invalid credentials"
+              error: "Credenciales invalidas"
             };
           } else if (error.code === "auth/user-not-found") {
-            this.emailState = { ...this.emailState, error: "User not found" };
+            this.emailState = {
+              ...this.emailState,
+              error: "Usuario no encontrado"
+            };
           } else if (error.code === "auth/too-many-requests") {
             this.emailState = {
               ...this.emailState,
-              error: "Too many attemps, try again later"
+              error: "Demasiados intentos fallidos, intenta más tarde."
             };
           } else {
             this.emailState = { ...this.emailState, error: error.code };

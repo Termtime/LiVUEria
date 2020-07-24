@@ -2,17 +2,18 @@
   <div class="col bg-super-dark">
     <div class="row center">
       <div class="loginCard bg-dark">
-        <h1 class="center">Log In</h1>
-        <small>To enjoy our website the most!</small>
+        <h1 class="center">Inicia Sesión</h1>
+        <small>Para acceder a tu contenido</small>
         <hr color="white" />
         <form v-on:submit="handleSubmit">
           <EmailTextField
-            :emailState="emailState"
+            v-bind:emailState="emailState"
             v-on:change="(email, error) => setEmail(email, error)"
           />
           <br />
           <PasswordField
             :passState="passState"
+            label="Contraseña:"
             v-on:change="(pass, error) => setPass(pass, error)"
           />
           <br />
@@ -22,15 +23,17 @@
                 ? true
                 : false
             "
-            label="Log in"
+            label="Inicia Sesión"
           />
         </form>
       </div>
     </div>
     <div class="row center">
-      <p style="margin:0; line-height:40px; padding-right:20px;">Dont have an account?</p>
+      <p style="margin:0; line-height:40px; padding-right:20px;">
+        ¿No tienes una cuenta?
+      </p>
       <button class="btn btn-info my-2 my-sm-0" @click="$router.push('signup')">
-        Sign Up
+        Regístrate
       </button>
     </div>
   </div>
@@ -55,6 +58,9 @@ export default {
     SubmitButton
   },
   methods: {
+    hacerAlert(msj) {
+      console.log(msj);
+    },
     setEmail(email, error) {
       this.emailState = { email, error };
     },
@@ -69,14 +75,17 @@ export default {
           if (error.code === "auth/wrong-password") {
             this.passState = {
               ...this.passState,
-              error: "Invalid credentials"
+              error: "Credenciales invalidas."
             };
           } else if (error.code === "auth/user-not-found") {
-            this.emailState = { ...this.emailState, error: "User not found" };
+            this.emailState = {
+              ...this.emailState,
+              error: "Usuario no encontrado."
+            };
           } else if (error.code === "auth/too-many-requests") {
             this.emailState = {
               ...this.emailState,
-              error: "Too many attemps, try again later"
+              error: "Demasiados intentos fallidos, intenta más tarde."
             };
           } else {
             this.emailState = { ...this.emailState, error: error.code };
