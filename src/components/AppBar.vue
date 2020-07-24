@@ -1,13 +1,9 @@
 <template>
   <div id="nav text-white">
-<<<<<<< HEAD
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-=======
     <div v-if="isAdmin">
       <AdministratePanel />
     </div>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
->>>>>>> b3fe52ebab0888d66ec64b0ea75c522c23a2f0b2
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <span class="navbar-brand link" @click="$router.push('/')">LiVUEria</span>
       <button
         class="navbar-toggler"
@@ -24,50 +20,24 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-<<<<<<< HEAD
             <span v-if="Boolean(loggedUser)" class="nav-link link" v-on:click="handleHomeClick">
-              My Books
+              Mis libros
               <span class="sr-only">(current)</span>
             </span>
           </li>
           <li class="nav-item">
-            <span class="navbar-brand link" @click="$router.push('library')">Library</span>
-=======
-            <span
-              v-if="Boolean(loggedUser)"
-              class="nav-link link"
-              v-on:click="handleHomeClick"
-              >Mis libros <span class="sr-only">(current)</span></span
-            >
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Librería</a>
->>>>>>> b3fe52ebab0888d66ec64b0ea75c522c23a2f0b2
+            <a class="nav-link link" @click="$router.push('libreria')">Librería</a>
           </li>
         </ul>
         <div v-if="!Boolean(loggedUser)" class="r">
           <div class="inline-right-margin">
-<<<<<<< HEAD
-            <button class="btn btn-primary my-2 my-sm-0" @click="$router.push('signin')">Log In</button>
-          </div>
-          <div class="inline-right-margin">
-            <button class="btn btn-info my-2 my-sm-0" @click="$router.push('signup')">Sign Up</button>
-=======
             <button
               class="btn btn-primary my-2 my-sm-0"
               @click="$router.push('signin')"
-            >
-              Inicia sesíon
-            </button>
+            >Inicia sesíon</button>
           </div>
           <div class="inline-right-margin">
-            <button
-              class="btn btn-info my-2 my-sm-0"
-              @click="$router.push('signup')"
-            >
-              Registrate
-            </button>
->>>>>>> b3fe52ebab0888d66ec64b0ea75c522c23a2f0b2
+            <button class="btn btn-info my-2 my-sm-0" @click="$router.push('signup')">Registrate</button>
           </div>
         </div>
         <div class="r inline-right-margin" v-else>
@@ -93,21 +63,13 @@
               }}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-<<<<<<< HEAD
-              <span class="dropdown-item link" v-on:click="logout">Log out</span>
-=======
-              <span class="dropdown-item link" v-on:click="logout"
-                >Cerrar sesión</span
-              >
+              <span class="dropdown-item link" v-on:click="logout">Cerrar sesión</span>
 
               <span
                 v-if="isAdmin"
                 class="dropdown-item link"
                 v-on:click="openAdminModal"
-              >
-                Administrar libros</span
-              >
->>>>>>> b3fe52ebab0888d66ec64b0ea75c522c23a2f0b2
+              >Administrar libros</span>
             </div>
           </li>
         </div>
@@ -118,13 +80,7 @@
             placeholder="Busca un título..."
             aria-label="Search"
           />
-<<<<<<< HEAD
-          <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
-=======
-          <button class="btn btn-success my-2 my-sm-0" type="submit">
-            Buscar
-          </button>
->>>>>>> b3fe52ebab0888d66ec64b0ea75c522c23a2f0b2
+          <button class="btn btn-success my-2 my-sm-0" type="submit">Buscar</button>
         </form>
       </div>
     </nav>
