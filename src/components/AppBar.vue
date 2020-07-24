@@ -1,6 +1,6 @@
 <template>
   <div id="nav text-white">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <span class="navbar-brand link" @click="$router.push('/')">LiVUEria</span>
       <button
         class="navbar-toggler"
@@ -17,33 +17,21 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <span
-              v-if="Boolean(loggedUser)"
-              class="nav-link link"
-              v-on:click="handleHomeClick"
-              >My Books <span class="sr-only">(current)</span></span
-            >
+            <span v-if="Boolean(loggedUser)" class="nav-link link" v-on:click="handleHomeClick">
+              My Books
+              <span class="sr-only">(current)</span>
+            </span>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Library</a>
+            <span class="navbar-brand link" @click="$router.push('library')">Library</span>
           </li>
         </ul>
         <div v-if="!Boolean(loggedUser)" class="r">
           <div class="inline-right-margin">
-            <button
-              class="btn btn-primary my-2 my-sm-0"
-              @click="$router.push('signin')"
-            >
-              Log In
-            </button>
+            <button class="btn btn-primary my-2 my-sm-0" @click="$router.push('signin')">Log In</button>
           </div>
           <div class="inline-right-margin">
-            <button
-              class="btn btn-info my-2 my-sm-0"
-              @click="$router.push('signup')"
-            >
-              Sign Up
-            </button>
+            <button class="btn btn-info my-2 my-sm-0" @click="$router.push('signup')">Sign Up</button>
           </div>
         </div>
         <div class="r inline-right-margin" v-else>
@@ -58,20 +46,18 @@
               aria-expanded="false"
             >
               {{
-                isAuthReady
-                  ? loggedUser.displayName == null
-                    ? loggedUser.email.substring(
-                        0,
-                        loggedUser.email.indexOf("@")
-                      )
-                    : loggedUser.displayName
-                  : null
+              isAuthReady
+              ? loggedUser.displayName == null
+              ? loggedUser.email.substring(
+              0,
+              loggedUser.email.indexOf("@")
+              )
+              : loggedUser.displayName
+              : null
               }}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <span class="dropdown-item link" v-on:click="logout"
-                >Log out</span
-              >
+              <span class="dropdown-item link" v-on:click="logout">Log out</span>
             </div>
           </li>
         </div>
@@ -82,9 +68,7 @@
             placeholder="Search"
             aria-label="Search"
           />
-          <button class="btn btn-success my-2 my-sm-0" type="submit">
-            Search
-          </button>
+          <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
         </form>
       </div>
     </nav>
