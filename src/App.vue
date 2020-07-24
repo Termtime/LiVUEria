@@ -69,4 +69,43 @@ html {
   display: flex;
   flex-direction: column;
 }
+
+.top-right-corner {
+  justify-content: flex-end;
+  justify-self: flex-end;
+  position: relative;
+  right: 2px;
+  top: 15px;
+  margin-bottom: -25px;
+}
+
+.icon-black {
+  color: black;
+  transition-duration: 0.2s;
+}
+
+.icon-yellow {
+  color: yellow;
+  transition-duration: 0.2s;
+}
+
+.icon-red {
+  color: crimson;
+  transition-duration: 0.2s;
+}
+.icon-red:hover {
+  color: #933;
+}
+
+.icon-dark-red {
+  color: #933;
+  transition-duration: 0.2s;
+}
+.icon-lg {
+  font-size: 2em;
+  z-index: 2;
+}
+.flex-container {
+  display: flex;
+}
 </style>

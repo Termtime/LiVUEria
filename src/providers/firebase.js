@@ -57,16 +57,14 @@ export class Firebase {
 
   //Database and storage Functions
 
-  users = () => this.db.collection(`users`);
-  currentUserProfile = () =>
-    this.db.collection(`users`).doc(this.auth.currentUser.uid);
-  currentUserStorage = () =>
-    this.storage.ref(`/users/${this.auth.currentUser.uid}`);
-  userNotes = uid =>
+  getUserFavorites = uid =>
     this.db
-      .collection("user-notes")
-      .doc(uid)
-      .collection("notes");
+      .collection("Favorites")
+      .where("uid", "==", uid)
+      .get();
 
+  allBooksPath = () => this.db.collection("Books");
   getCurrentUserUid = () => this.auth.currentUser.uid;
+  selectCollection = dbPath => this.db.collection(dbPath);
+  getDocRef = (dbPath, docID) => this.db.collection(dbPath).doc(docID);
 }

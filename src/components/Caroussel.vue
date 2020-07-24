@@ -10,7 +10,7 @@
         <img src="../assets/caroussel/1.jpeg" class="d-block w-100" alt="..." />
         <div class="carousel-caption d-none d-md-block">
           <h2>LiVUEria</h2>
-          <h5>where vue and books meet</h5>
+          <h5>Donde Vue y los libros se encuentran</h5>
         </div>
       </div>
       <div class="carousel-item">
@@ -20,16 +20,16 @@
           alt="..."
         />
         <div class="carousel-caption d-none d-md-block">
-          <h2>See all the details</h2>
-          <h5>Search from hundreds of books</h5>
+          <h2>Explora todos los detalles</h2>
+          <h5>Busca entre cientos de libros</h5>
         </div>
       </div>
       <div class="carousel-item">
         <img src="../assets/caroussel/3.jpg" class="d-block w-100" alt="..." />
         <div class="carousel-caption d-none d-md-block">
-          <h2>Join today</h2>
+          <h2>Unete hoy</h2>
           <h5>
-            keep your favorites in your personal library!
+            ! Mantén tus favoritos en tu librería personal !
           </h5>
         </div>
       </div>
