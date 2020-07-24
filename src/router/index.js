@@ -16,7 +16,7 @@ const routes = [
   {
     path: "/books",
     name: "Books",
-    component: BooksPage
+    component: withFirebase(BooksPage)
   },
   {
     path: "/about",
@@ -36,6 +36,16 @@ const routes = [
     path: "/signup",
     name: "Sign up",
     component: withFirebase(SignUpPage)
+  },
+  {
+    path: "/library",
+    name: "library",
+    component: null
+  },
+  {
+    path: "/library/book/:bookID",
+    name: "bookDetail",
+    component: null
   }
 ];
 
