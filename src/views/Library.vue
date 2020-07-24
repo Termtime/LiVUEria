@@ -3,8 +3,10 @@
     <h1>LiVUEria</h1>
     <small>Where Vue and books meet</small>
     <div class="section-divider">
-      <h2 id="barraBusqueda">Books</h2>
-      <h2 style="overflow: hidden;">search</h2>
+      <div class="left row">
+        <h2 class="col-md-6">Books</h2>
+        <h2 class="col-md-6">Search</h2>
+      </div>
       <div class="divider">
         <hr color="white" />
       </div>
@@ -19,8 +21,3 @@ export default {
 };
 </script>
 
-<style scoped>
-#barraBusqueda {
-  display: flex;
-}
-</style>
