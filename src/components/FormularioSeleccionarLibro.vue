@@ -14,7 +14,7 @@
         v-for="book in results"
         :key="book.id"
         class="row shadow link rounded p-3 my-1"
-        @click="selectedBook = book"
+        @click="(evt) => handleSelectBook(evt, book)"
       >
         <div class="col-10">
           <h5>{{ book.title }}</h5>
@@ -31,15 +31,15 @@
 </template>
 <script>
 import SubmitButton from "./SubmitButton.vue";
-
+const jq = require("jquery");
+window.jq = jq;
 export default {
-  name: "FormularioEditarBorrarLibro.vue",
+  name: "FormularioSeleccionarLibro.vue",
   props: ["firebase"],
   data: function() {
     return {
       buscar: "",
       results: [],
-      selectedBook: null
     };
   },
   methods: {
@@ -51,21 +51,31 @@ export default {
         .startAt(this.buscar.toLowerCase())
         .endAt(this.buscar.toLowerCase() + "\uf8ff")
         .get()
-        .then(snapshot => {
+        .then((snapshot) => {
           console.log(snapshot);
-          let books = snapshot.docs.map(doc => ({
+          let books = snapshot.docs.map((doc) => ({
             title: doc.data().title,
             year: doc.data().year,
             genre: doc.data().genre,
             author: doc.data().author,
-            id: doc.id
+            posterUrl: doc.data().posterUrl,
+            id: doc.id,
           }));
           this.results = books;
         });
-    }
+    },
+    handleSelectBook(evt, book) {
+      this.$emit("selected", book);
+    },
+  },
+  mounted() {
+    jq("#adminModal").on("hidden.bs.modal", () => {
+      this.buscar = "";
+      this.results = [];
+    });
   },
   components: {
-    SubmitButton
-  }
+    SubmitButton,
+  },
 };
 </script>

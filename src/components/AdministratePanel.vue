@@ -32,7 +32,8 @@
               <li class="nav-item">
                 <a
                   class="nav-link active"
-                  href="#agregar"
+                  id="toggleAgregarLibro"
+                  href="#AgregarLibro"
                   data-toggle="tab"
                   aria-controls="agregar"
                   aria-selected="true"
@@ -42,7 +43,7 @@
               <li class="nav-item">
                 <a
                   class="nav-link"
-                  href="#editarEliminar"
+                  href="#SeleccionarLibro"
                   data-toggle="tab"
                   aria-controls="editarEliminar"
                   aria-selected="false"
@@ -51,10 +52,11 @@
               </li>
               <li class="nav-item">
                 <a
-                  class="nav-link"
-                  href="#detalles"
+                  class="nav-link disabled"
+                  id="toggleEditar"
+                  href="#EditarLibro"
                   data-toggle="tab"
-                  aria-controls="editarEliminar"
+                  aria-controls="EditarLibro"
                   aria-selected="false"
                   >Detalles</a
                 >
@@ -64,13 +66,23 @@
             <div class="tab-content" id="myTabContent">
               <div
                 class="tab-pane fade show active"
-                id="agregar"
+                id="AgregarLibro"
                 role="tabpanel"
               >
-                <FormularioAgregarLibro />
+                <FormularioAgregarLibro :firebase="firebase" />
               </div>
-              <div class="tab-pane fade" id="editarEliminar" role="tabpanel">
-                <EditarBorrarLibro  />
+              <div class="tab-pane fade" id="SeleccionarLibro" role="tabpanel">
+                <FormularioSeleccionarLibro
+                  :firebase="firebase"
+                  v-on:selected="handleBookSelected"
+                />
+                <!-- v-on:book-selected="(book) => handleBookSelected(book)" -->
+              </div>
+              <div class="tab-pane fade" id="EditarLibro" role="tabpanel">
+                <FormularioEditarLibro
+                  :firebase="firebase"
+                  :libro="libroEditar"
+                />
               </div>
             </div>
           </div>
@@ -89,17 +101,49 @@
   </div>
 </template>
 <script>
-import FormularioAgregarLibroBase from "../components/FormularioAgregarLibro.vue";
-import EditarBorrarLibroBase from "../components/FormularioEditarBorrarLibro.vue";
-import { withFirebase } from "../components/HOC/FirebaseProvider.js";
+import FormularioAgregarLibro from "../components/FormularioAgregarLibro.vue";
+import FormularioSeleccionarLibro from "../components/FormularioSeleccionarLibro.vue";
+import FormularioEditarLibro from "../components/FormularioEditarLibro.vue";
 
-const EditarBorrarLibro = withFirebase(EditarBorrarLibroBase);
-const FormularioAgregarLibro = withFirebase(FormularioAgregarLibroBase);
+// import { withFirebase } from "../components/HOC/FirebaseProvider.js";
+
+// const FormularioSeleccionarLibro = withFirebase(FormularioSeleccionarLibroBase);
+// const FormularioAgregarLibro = withFirebase(FormularioAgregarLibroBase);
+// const FormularioEditarLibro = withFirebase(FormularioEditarLibroBase);
+
+const jq = require("jquery");
+window.jq = jq;
+
 export default {
   name: "AdministratePanel",
+  props: ["firebase"],
+  data: function() {
+    return {
+      libroEditar: null,
+    };
+  },
   components: {
     FormularioAgregarLibro,
-    EditarBorrarLibro
+    FormularioSeleccionarLibro,
+    FormularioEditarLibro,
+  },
+  methods: {
+    handleBookSelected(book) {
+      console.log("a book has been selected, parent");
+      this.libroEditar = book;
+      jq("#toggleEditar").removeClass("disabled");
+      jq("#toggleEditar").tab("show");
+    },
+  },
+  mounted() {
+    jq("#adminModal").on("hidden.bs.modal", () => {
+      this.libroEditar = null;
+      jq("#toggleAgregarLibro").tab("show");
+    });
+
+    jq("#toggleEditar").on("hide.bs.tab", () => {
+      jq("#toggleEditar").addClass("disabled");
+    });
   },
 };
 </script>
