@@ -4,7 +4,7 @@ import BooksPage from "../views/BooksPage.vue";
 import LoginPage from "../views/LoginPage.vue";
 import SignUpPage from "../views/SignUpPage.vue";
 import LandingPage from "../views/LandingPage.vue";
-import Library from "../views/Library.vue";
+import LibraryPage from "../views/LibraryPage.vue";
 import { withFirebase } from "../components/HOC/FirebaseProvider.js";
 Vue.use(VueRouter);
 
@@ -41,7 +41,7 @@ const routes = [
   {
     path: "/libreria",
     name: "libreria",
-    component: Library
+    component: withFirebase(LibraryPage)
   },
   {
     path: "/library/book/:bookID",
