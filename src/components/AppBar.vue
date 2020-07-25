@@ -88,7 +88,11 @@
 </template>
 
 <script>
-import AdministratePanel from "../components/AdministratePanel.vue";
+import AdministratePanelBase from "../components/AdministratePanel.vue";
+import { withFirebase } from "../components/HOC/FirebaseProvider.js";
+
+const AdministratePanel = withFirebase(AdministratePanelBase);
+
 const jq = require("jquery");
 window.jq = jq;
 

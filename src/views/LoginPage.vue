@@ -58,9 +58,6 @@ export default {
     SubmitButton
   },
   methods: {
-    hacerAlert(msj) {
-      console.log(msj);
-    },
     setEmail(email, error) {
       this.emailState = { email, error };
     },
