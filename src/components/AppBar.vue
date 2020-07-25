@@ -20,13 +20,19 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <span v-if="Boolean(loggedUser)" class="nav-link link" v-on:click="handleHomeClick">
+            <span
+              v-if="Boolean(loggedUser)"
+              class="nav-link link"
+              v-on:click="handleHomeClick"
+            >
               Mis libros
               <span class="sr-only">(current)</span>
             </span>
           </li>
           <li class="nav-item">
-            <a class="nav-link link" @click="$router.push('libreria')">Librería</a>
+            <a class="nav-link link" @click="$router.push('libreria')"
+              >Librería</a
+            >
           </li>
         </ul>
         <div v-if="!Boolean(loggedUser)" class="r">
@@ -34,10 +40,17 @@
             <button
               class="btn btn-primary my-2 my-sm-0"
               @click="$router.push('signin')"
-            >Inicia sesíon</button>
+            >
+              Inicia sesíon
+            </button>
           </div>
           <div class="inline-right-margin">
-            <button class="btn btn-info my-2 my-sm-0" @click="$router.push('signup')">Registrate</button>
+            <button
+              class="btn btn-info my-2 my-sm-0"
+              @click="$router.push('signup')"
+            >
+              Registrate
+            </button>
           </div>
         </div>
         <div class="r inline-right-margin" v-else>
@@ -52,36 +65,30 @@
               aria-expanded="false"
             >
               {{
-              isAuthReady
-              ? loggedUser.displayName == null
-              ? loggedUser.email.substring(
-              0,
-              loggedUser.email.indexOf("@")
-              )
-              : loggedUser.displayName
-              : null
+                isAuthReady
+                  ? loggedUser.displayName == null
+                    ? loggedUser.email.substring(
+                        0,
+                        loggedUser.email.indexOf("@")
+                      )
+                    : loggedUser.displayName
+                  : null
               }}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <span class="dropdown-item link" v-on:click="logout">Cerrar sesión</span>
+              <span class="dropdown-item link" v-on:click="logout"
+                >Cerrar sesión</span
+              >
 
               <span
                 v-if="isAdmin"
                 class="dropdown-item link"
                 v-on:click="openAdminModal"
-              >Administrar libros</span>
+                >Administrar libros</span
+              >
             </div>
           </li>
         </div>
-        <form class="form-inline my-2 my-lg-0">
-          <input
-            class="form-control mr-sm-2"
-            type="search"
-            placeholder="Busca un título..."
-            aria-label="Search"
-          />
-          <button class="btn btn-success my-2 my-sm-0" type="submit">Buscar</button>
-        </form>
       </div>
     </nav>
   </div>
@@ -99,14 +106,14 @@ window.jq = jq;
 export default {
   name: "AppBar",
   components: {
-    AdministratePanel
+    AdministratePanel,
   },
   data: function() {
     return {
       isAuthReady: false,
       unsubListener: null,
       loggedUser: null,
-      isAdmin: false
+      isAdmin: false,
     };
   },
   props: ["firebase"],
@@ -120,10 +127,10 @@ export default {
     openAdminModal() {
       console.log("trying to open modal");
       jq("#adminModal").modal("show");
-    }
+    },
   },
   mounted() {
-    this.unsubListener = this.firebase.auth.onAuthStateChanged(user => {
+    this.unsubListener = this.firebase.auth.onAuthStateChanged((user) => {
       if (user) {
         this.loggedUser = user;
         var administradores = [];
@@ -131,7 +138,7 @@ export default {
           .collection("Administrators")
           .doc("adminList")
           .get()
-          .then(doc => {
+          .then((doc) => {
             if (doc.exists) {
               administradores = doc.data().administrators;
               if (administradores.includes(user.email)) this.isAdmin = true;
@@ -147,6 +154,6 @@ export default {
   beforeDestroy() {
     //desuscribir el listener para evitar memory leaks y errores
     this.unsubListener();
-  }
+  },
 };
 </script>
