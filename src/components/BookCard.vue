@@ -52,7 +52,7 @@ export default {
   data: function() {
     return {
       listaModificada: [],
-      favoritos: []
+      favoritos: [],
     };
   },
   props: ["listaLibros", "firebase"],
@@ -83,9 +83,9 @@ export default {
         .collection("/Favorites")
         .where("bookID", "==", libroID)
         .get()
-        .then(snapshot => {
+        .then((snapshot) => {
           let documentoBorrar = snapshot.docs.filter(
-            doc => doc.data().uid === this.firebase.auth.currentUser.uid
+            (doc) => doc.data().uid === this.firebase.auth.currentUser.uid
           );
           console.log(documentoBorrar);
           this.firebase.db
@@ -96,36 +96,45 @@ export default {
       // .delete({ bookID: libroID, uid: this.firebase.auth.currentUser.uid });
     },
     obtenerFavoritos() {
-      this.firebase.db.collection("/Favorites").onSnapshot(snapshot => {
-        let favs = snapshot.docs.map(favorito => ({
+      this.firebase.db.collection("/Favorites").onSnapshot((snapshot) => {
+        let favs = snapshot.docs.map((favorito) => ({
           id: favorito.id,
           libroId: favorito.data().bookID,
-          uid: favorito.data().uid
+          uid: favorito.data().uid,
         }));
         this.favoritos = favs;
 
         console.log(this.listaLibros);
         console.log(favs);
         let librosFavoritos = this.listaLibros.filter(
-          libro =>
-            favs.filter(favorito => favorito.libroId == libro.id).length > 0
+          (libro) =>
+            favs.filter((favorito) => favorito.libroId == libro.id).length > 0
         );
         console.log(librosFavoritos);
-        this.listaModificada = this.listaLibros.map(libro =>
-          librosFavoritos.filter(lf => lf.id == libro.id).length > 0
+        this.listaModificada = this.listaLibros.map((libro) =>
+          librosFavoritos.filter((lf) => lf.id == libro.id).length > 0
             ? { ...libro, esFav: true }
             : libro
         );
       });
-    }
+    },
   },
-  mounted() {
-    this.listaModificada = [""];
+  // mounted() {
+  //   this.listaModificada = [""];
+  // },
+  watch: {
+    listaLibros: {
+      inmediate: true,
+      handler(newVal) {
+        if (newVal == null || newVal == undefined) return;
+        this.obtenerFavoritos();
+      },
+    },
   },
-  beforeUpdate() {
-    if (this.listaModificada[0] == "") {
-      this.obtenerFavoritos();
-    }
-  }
+  // beforeUpdate() {
+  //   if (this.listaModificada[0] == "") {
+  //     this.obtenerFavoritos();
+  //   }
+  // }
 };
 </script>
