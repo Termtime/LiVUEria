@@ -82,13 +82,13 @@ export default {
       let fileUpload = document.getElementById("posterImg");
       //extraer el archivo en una variable
       let file = fileUpload.files[0];
-      if (file.type.includes("image")) {
+      if (file !== null && file !== undefined && file.type.includes("image")) {
         let docRef = await this.firebase.selectCollection("Books").add({
           author: this.addAuthor,
           title: this.addTitle,
           year: this.addYear,
           genre: this.addGenre,
-          lowerCaseTitle: this.addtitle.toLowerCase(),
+          lowerCaseTitle: this.addTitle.toLowerCase(),
         });
         console.log(docRef);
         //guardar la foto en firebase storage
@@ -114,8 +114,21 @@ export default {
             });
         }
       } else {
-        alert("La foto debe ser una imagen");
+        await this.firebase.selectCollection("Books").add({
+          author: this.addAuthor,
+          title: this.addTitle,
+          year: this.addYear,
+          genre: this.addGenre,
+          posterUrl: "",
+          lowerCaseTitle: this.addTitle.toLowerCase(),
+        });
       }
+      //la escritura fue exitosa asi que limpiar los campos
+      this.addAuthor = "";
+      this.addYear = "2000";
+      this.addTitle = "";
+      this.addPosterImg = null;
+      this.addGenre = "";
     },
   },
   mounted() {

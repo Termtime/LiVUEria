@@ -93,11 +93,15 @@ export default {
       evt.preventDefault();
       let fileUpload = document.getElementById("addPosterImg");
       //extraer el archivo en una variable
-      let file = fileUpload.files[0];
+      console.log(fileUpload);
+      console.log(fileUpload.files);
+      let file = fileUpload.files > 0 ? fileUpload.files[0] : null;
+
+      console.log(file);
       let newFileUrl = this.currentPosterImg;
       // console.log("BEFORE UPLOAD:", newFileUrl);
-      if (file !== null || file !== undefined) {
-        // console.log("Subiendo imagen");
+      if (file !== null && file !== undefined) {
+        console.log("Subiendo imagen");
         let imgName;
         let imgRef = await this.firebase.storage
           .ref("/BookPosters")
@@ -122,6 +126,8 @@ export default {
           lowerCaseTitle: this.addTitle.toLowerCase(),
           posterUrl: newFileUrl,
         });
+
+      jq("#toggleSeleccionarLibro").tab("show");
     },
   },
   mounted() {
@@ -133,13 +139,13 @@ export default {
       this.currentPosterImg = null;
       this.addGenre = "";
     });
-    jq("#toggleEditar").on("hide.bs.tab", () => {
-      this.addAuthor = "";
-      this.addYear = "2000";
-      this.addTitle = "";
-      this.addPosterImg = null;
-      this.addGenre = "";
-    });
+    // jq("#toggleEditar").on("hide.bs.tab", () => {
+    //   this.addAuthor = "";
+    //   this.addYear = "2000";
+    //   this.addTitle = "";
+    //   this.addPosterImg = null;
+    //   this.addGenre = "";
+    // });
   },
   watch: {
     libro: {

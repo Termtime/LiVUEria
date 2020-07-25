@@ -44,6 +44,7 @@
                 <a
                   class="nav-link"
                   href="#SeleccionarLibro"
+                  id="toggleSeleccionarLibro"
                   data-toggle="tab"
                   aria-controls="editarEliminar"
                   aria-selected="false"
