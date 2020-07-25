@@ -41,7 +41,7 @@ const routes = [
   {
     path: "/libreria",
     name: "libreria",
-    component: LibraryPage
+    component: withFirebase(LibraryPage)
   },
   {
     path: "/library/book/:bookID",
