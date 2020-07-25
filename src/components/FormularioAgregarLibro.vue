@@ -83,9 +83,10 @@ export default {
       if (file.type.includes("image")) {
         let docRef = await this.firebase.selectCollection("Books").add({
           author: this.addAuthor,
-          title: this.addAuthor,
+          title: this.addTitle,
           year: this.addYear,
-          genre: this.addGenre
+          genre: this.addGenre,
+          lowerCaseTitle: this.addtitle.toLowerCase()
         });
         console.log(docRef);
         //guardar la foto en firebase storage

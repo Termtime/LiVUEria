@@ -49,6 +49,16 @@
                   >Editar/Eliminar</a
                 >
               </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="#detalles"
+                  data-toggle="tab"
+                  aria-controls="editarEliminar"
+                  aria-selected="false"
+                  >Detalles</a
+                >
+              </li>
             </ul>
             <!--CONTENIDO MODAL-->
             <div class="tab-content" id="myTabContent">
@@ -60,7 +70,7 @@
                 <FormularioAgregarLibro />
               </div>
               <div class="tab-pane fade" id="editarEliminar" role="tabpanel">
-                adios
+                <EditarBorrarLibro  />
               </div>
             </div>
           </div>
@@ -72,7 +82,6 @@
             >
               Cerrar
             </button>
-            <button type="button" class="btn btn-primary">Finalizar</button>
           </div>
         </div>
       </div>
@@ -81,13 +90,16 @@
 </template>
 <script>
 import FormularioAgregarLibroBase from "../components/FormularioAgregarLibro.vue";
+import EditarBorrarLibroBase from "../components/FormularioEditarBorrarLibro.vue";
 import { withFirebase } from "../components/HOC/FirebaseProvider.js";
 
+const EditarBorrarLibro = withFirebase(EditarBorrarLibroBase);
 const FormularioAgregarLibro = withFirebase(FormularioAgregarLibroBase);
 export default {
   name: "AdministratePanel",
-  components:{
-    FormularioAgregarLibro
-  }
+  components: {
+    FormularioAgregarLibro,
+    EditarBorrarLibro
+  },
 };
 </script>
