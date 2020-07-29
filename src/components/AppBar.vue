@@ -106,14 +106,16 @@ window.jq = jq;
 export default {
   name: "AppBar",
   components: {
-    AdministratePanel,
+    AdministratePanel
   },
   data: function() {
     return {
       isAuthReady: false,
-      unsubListener: null,
+      adminCheckUnsub: null,
+      bookListener: null,
+      favoritesListener: null,
       loggedUser: null,
-      isAdmin: false,
+      isAdmin: false
     };
   },
   props: ["firebase"],
@@ -127,33 +129,57 @@ export default {
     openAdminModal() {
       console.log("trying to open modal");
       jq("#adminModal").modal("show");
-    },
+    }
   },
   mounted() {
-    this.unsubListener = this.firebase.auth.onAuthStateChanged((user) => {
+    this.adminCheckUnsub = this.firebase.auth.onAuthStateChanged(user => {
       if (user) {
+        this.$store.commit("login");
         this.loggedUser = user;
         var administradores = [];
         this.firebase.db
           .collection("Administrators")
           .doc("adminList")
           .get()
-          .then((doc) => {
+          .then(doc => {
             if (doc.exists) {
               administradores = doc.data().administrators;
               if (administradores.includes(user.email)) this.isAdmin = true;
             }
           });
+
+        this.firebase.getUserFavorites(user.uid).onSnapshot(snapshot => {
+          let favorites = snapshot.docs.map(doc => ({
+            bookID: doc.data().bookID,
+            id: doc.id
+          }));
+          this.$store.commit("updateFavorites", favorites);
+        });
       } else {
+        this.$store.commit("logout");
         this.loggedUser = null;
         this.isAdmin = false;
       }
+      this.bookListener = this.firebase.allBooksPath().onSnapshot(snapshot => {
+        let libros = snapshot.docs.map(doc => ({
+          id: doc.id,
+          title: doc.data().title,
+          year: doc.data().year,
+          description: doc.data().description,
+          posterUrl: doc.data().posterUrl,
+          imgLocation: doc.data().imgLocation,
+          author: doc.data().author,
+          genre: doc.data().genre
+        }));
+        this.$store.commit("updateBooks", libros);
+      });
       this.isAuthReady = true;
+      this.$store.commit("authIsReady");
     });
   },
   beforeDestroy() {
     //desuscribir el listener para evitar memory leaks y errores
     this.unsubListener();
-  },
+  }
 };
 </script>
