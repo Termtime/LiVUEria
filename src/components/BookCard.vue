@@ -25,11 +25,7 @@
           v-on:click="goToBook(libro.id)"
         >
           <img
-            :src="
-              libro.posterUrl != null || libro.posterUrl.length != 0
-                ? libro.posterUrl
-                : '../assets/logo.png'
-            "
+            :src="libro.posterUrl != '' ? libro.posterUrl : placeholder"
             class="card-img-top"
             alt="..."
           />
@@ -47,12 +43,12 @@
 </template>
 
 <script>
+import noimg from "../assets/nobookimg.png";
 export default {
   name: "BookCard",
   data: function() {
     return {
-      listaModificada: [],
-      favoritos: [],
+      placeholder: noimg
     };
   },
   props: ["listaLibros", "firebase"],
@@ -74,67 +70,54 @@ export default {
       }
     },
     crearFavorito(libroID) {
-      this.firebase.db
-        .collection("/Favorites")
-        .add({ bookID: libroID, uid: this.firebase.auth.currentUser.uid });
+      if (this.$store.state.isAuth) {
+        this.firebase.db
+          .collection("/Favorites")
+          .add({ bookID: libroID, uid: this.firebase.auth.currentUser.uid });
+      } else {
+        this.$store.commit("addTempFavorite", {
+          bookID: libroID
+        });
+      }
     },
     removerFavorito(libroID) {
-      this.firebase.db
-        .collection("/Favorites")
-        .where("bookID", "==", libroID)
-        .get()
-        .then((snapshot) => {
-          let documentoBorrar = snapshot.docs.filter(
-            (doc) => doc.data().uid === this.firebase.auth.currentUser.uid
-          );
-          console.log(documentoBorrar);
-          this.firebase.db
-            .collection("/Favorites")
-            .doc(documentoBorrar[0].id)
-            .delete();
-        });
-      // .delete({ bookID: libroID, uid: this.firebase.auth.currentUser.uid });
-    },
-    obtenerFavoritos() {
-      this.firebase.db.collection("/Favorites").onSnapshot((snapshot) => {
-        let favs = snapshot.docs.map((favorito) => ({
-          id: favorito.id,
-          libroId: favorito.data().bookID,
-          uid: favorito.data().uid,
-        }));
-        this.favoritos = favs;
-
-        console.log(this.listaLibros);
-        console.log(favs);
-        let librosFavoritos = this.listaLibros.filter(
-          (libro) =>
-            favs.filter((favorito) => favorito.libroId == libro.id).length > 0
-        );
-        console.log(librosFavoritos);
-        this.listaModificada = this.listaLibros.map((libro) =>
-          librosFavoritos.filter((lf) => lf.id == libro.id).length > 0
-            ? { ...libro, esFav: true }
-            : libro
-        );
-      });
-    },
+      if (this.$store.state.isAuth) {
+        this.firebase.db
+          .collection("/Favorites")
+          .where("bookID", "==", libroID)
+          .get()
+          .then(snapshot => {
+            let documentoBorrar = snapshot.docs.filter(
+              doc => doc.data().uid === this.firebase.auth.currentUser.uid
+            );
+            console.log(documentoBorrar);
+            this.firebase.db
+              .collection("/Favorites")
+              .doc(documentoBorrar[0].id)
+              .delete();
+          });
+      } else {
+        this.$store.commit("removeFavoriteWithID", libroID);
+      }
+    }
   },
-  // mounted() {
-  //   this.listaModificada = [""];
-  // },
-  watch: {
-    listaLibros: {
-      inmediate: true,
-      handler(newVal) {
-        if (newVal == null || newVal == undefined) return;
-        this.obtenerFavoritos();
-      },
+  computed: {
+    favoritos() {
+      return this.$store.getters.getFavorites;
     },
-  },
-  // beforeUpdate() {
-  //   if (this.listaModificada[0] == "") {
-  //     this.obtenerFavoritos();
-  //   }
-  // }
+    listaModificada() {
+      let librosFavoritos = this.listaLibros.filter(
+        libro =>
+          this.favoritos.filter(favorito => favorito.bookID == libro.id)
+            .length > 0
+      );
+      let listaMod = this.listaLibros.map(libro =>
+        librosFavoritos.filter(lf => lf.id == libro.id).length > 0
+          ? { ...libro, esFav: true }
+          : libro
+      );
+      return listaMod;
+    }
+  }
 };
 </script>

@@ -9,7 +9,7 @@
       </div>
     </div>
 
-    <div v-if="books.length !== 0" class="section">
+    <div v-if="favoriteBooks.length !== 0" class="section">
       <div class="card-container ">
         <div
           v-for="book in favoriteBooks"
@@ -29,11 +29,7 @@
             @click="goToBook(book.id)"
           >
             <img
-              :src="
-                book.posterUrl != null || book.posterUrl.length != 0
-                  ? book.posterUrl
-                  : '../assets/logo.png'
-              "
+              :src="book.posterUrl != '' ? book.posterUrl : placeholder"
               class="card-img-top"
               alt="..."
             />
@@ -53,26 +49,20 @@
 
 <script>
 // @ is an alias to /src
-// import HelloWorld from "@/components/HelloWorld.vue";
+import noimg from "../assets/nobookimg.png";
 export default {
   name: "BooksPage",
   data: function() {
     return {
-      isAuthReady: false,
-      unsubListener: null,
-      favoritesListener: null,
-      bookListener: null,
-      loggedUser: null,
-      favorites: [],
-      books: [],
-      favoriteBooks: [],
-      removeFavoritesList: []
+      removeFavoritesList: [],
+      placeholder: noimg
     };
   },
   props: ["firebase"],
   components: {},
   methods: {
     removeAllDiscardedBooks() {
+      if (this.removeFavoritesList.length === 0) return;
       let batch = this.firebase.db.batch();
 
       this.removeFavoritesList.map(bookID =>
@@ -82,21 +72,6 @@ export default {
     },
     goToBook(bookID) {
       this.$router.push(`/library/book/${bookID}`);
-    },
-    updateFavoriteBooksList() {
-      try {
-        this.favoriteBooks = this.favorites.map(favoriteInfo => {
-          var favoritedBook = this.books.find(
-            book => book["id"] === favoriteInfo.bookID
-          );
-          return {
-            ...favoritedBook,
-            favoritesEntryID: favoriteInfo.id
-          };
-        });
-      } catch (e) {
-        console.log(e);
-      }
     },
     toggleFavorite(evt, book) {
       //
@@ -118,41 +93,35 @@ export default {
       }
     }
   },
-  mounted() {
-    this.bookListener = this.firebase.allBooksPath().onSnapshot(snapshot => {
-      let libros = snapshot.docs.map(doc => ({
-        id: doc.id,
-        title: doc.data().title,
-        year: doc.data().year,
-        description: doc.data().description,
-        posterUrl: doc.data().posterUrl
-      }));
-      console.log("HOLA RECIBIMOS UN SNAPSHOT");
-      this.books = libros;
-      this.updateFavoriteBooksList();
-    });
-    this.unsubListener = this.firebase.auth.onAuthStateChanged(user => {
-      if (user) {
-        this.loggedUser = user;
-        this.firebase.getUserFavorites(user.uid).then(snapshot => {
-          let docs = snapshot.docs.map(doc => ({
-            bookID: doc.data().bookID,
-            id: doc.id
-          }));
-          this.favorites = docs;
-          this.updateFavoriteBooksList();
+  computed: {
+    books() {
+      return this.$store.getters.getBooks;
+    },
+    favorites() {
+      return this.$store.getters.getFavorites;
+    },
+    favoriteBooks() {
+      let favBooks;
+      try {
+        favBooks = this.favorites.map(favoriteInfo => {
+          var favoritedBook = this.books.find(
+            book => book["id"] === favoriteInfo.bookID
+          );
+          console.log(favoritedBook);
+          return {
+            ...favoritedBook,
+            favoritesEntryID: favoriteInfo.id
+          };
         });
-        console.log(this.favorites);
-      } else {
-        this.loggedUser = null;
+      } catch (e) {
+        favBooks = [];
+        console.log(e);
       }
-      this.isAuthReady = true;
-    });
+
+      return favBooks;
+    }
   },
   beforeDestroy() {
-    //desuscribir el listener para evitar memory leaks y errores
-    this.unsubListener();
-    this.bookListener();
     this.removeAllDiscardedBooks();
   }
 };
@@ -167,8 +136,6 @@ export default {
   flex-direction: column;
 }
 .divider {
-  /* display:flex; */
-  /* background-color: white; */
   width: 100%;
   justify-content: center;
   align-content: center;
@@ -188,13 +155,21 @@ export default {
 }
 
 .reactive-card {
+  box-shadow: 0 -2px 10px rgba(100, 100, 100, 1);
   transition-duration: 0.2s;
   display: flex;
   margin: 1%;
+  height: 525px;
+  padding: 5px;
 }
 
+.reactive-card img {
+  height: 400px;
+  object-fit: contain;
+  border-radius: 5%;
+}
 .reactive-card:hover {
-  transform: scale(1.03);
+  transform: scale(1.02);
 }
 
 .card-container {

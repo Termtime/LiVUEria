@@ -58,10 +58,7 @@ export class Firebase {
   //Database and storage Functions
 
   getUserFavorites = uid =>
-    this.db
-      .collection("Favorites")
-      .where("uid", "==", uid)
-      .get();
+    this.db.collection("Favorites").where("uid", "==", uid);
 
   allBooksPath = () => this.db.collection("Books");
   getCurrentUserUid = () => this.auth.currentUser.uid;

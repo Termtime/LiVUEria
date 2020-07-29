@@ -69,12 +69,12 @@ export default {
       addTitle: "",
       addYear: "2000",
       addPosterImg: null,
-      addGenre: "",
+      addGenre: ""
     };
   },
   props: ["firebase"],
   components: {
-    SubmitButton,
+    SubmitButton
   },
   methods: {
     async handleBookAdd(evt) {
@@ -88,7 +88,7 @@ export default {
           title: this.addTitle,
           year: this.addYear,
           genre: this.addGenre,
-          lowerCaseTitle: this.addTitle.toLowerCase(),
+          lowerCaseTitle: this.addTitle.toLowerCase()
         });
         console.log(docRef);
         //guardar la foto en firebase storage
@@ -99,7 +99,7 @@ export default {
             .ref("/BookPosters")
             .child(`${docRef.id}.${file.type.substring(6)}`)
             .put(file)
-            .then((imgRef) => {
+            .then(imgRef => {
               imgName = imgRef.ref.name;
               console.log(imgRef);
               console.log(imgRef.ref.name);
@@ -107,9 +107,12 @@ export default {
                 .ref("/BookPosters")
                 .child(imgName)
                 .getDownloadURL()
-                .then((url) => {
+                .then(url => {
                   console.log(url);
-                  docRef.update({ posterUrl: url });
+                  docRef.update({
+                    posterUrl: url,
+                    imgLocation: `BookPosters/${imgName}`
+                  });
                 });
             });
         }
@@ -120,7 +123,7 @@ export default {
           year: this.addYear,
           genre: this.addGenre,
           posterUrl: "",
-          lowerCaseTitle: this.addTitle.toLowerCase(),
+          lowerCaseTitle: this.addTitle.toLowerCase()
         });
       }
       //la escritura fue exitosa asi que limpiar los campos
@@ -129,7 +132,7 @@ export default {
       this.addTitle = "";
       this.addPosterImg = null;
       this.addGenre = "";
-    },
+    }
   },
   mounted() {
     jq("#adminModal").on("hidden.bs.modal", () => {
@@ -139,6 +142,6 @@ export default {
       this.addPosterImg = null;
       this.addGenre = "";
     });
-  },
+  }
 };
 </script>
