@@ -30,7 +30,7 @@ export default {
       if (regex.test(evt.target.value)) {
         this.$emit("change", evt.target.value, null);
       } else {
-        this.$emit("change", evt.target.value, "Enter a valid email address");
+        this.$emit("change", evt.target.value, "Ingrese un correo válido");
       }
     }
   }

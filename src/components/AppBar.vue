@@ -151,7 +151,7 @@ export default {
   },
   methods: {
     handleHomeClick() {
-      this.$router.push("/books");
+      this.$router.push("/favorites");
     },
     logout() {
       this.firebase.signOut().then(() => this.$router.push("signin"));

@@ -72,7 +72,7 @@ export default new Vuex.Store({
         : state.appbarColor;
     },
     getLogButtonColor: (state) => {
-      return (state.logButtonColor = state.logButtonColor); /////////////////////////
+      return state.logButtonColor; /////////////////////////
     },
   },
   actions: {},

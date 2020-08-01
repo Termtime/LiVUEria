@@ -42,7 +42,7 @@
           </h1>
           <button
             id="ir"
-            class="btn btn-primary shadow"
+            class="text-white shadow reactive"
             @click="$router.push('/libreria')"
           >Ir a la Librería</button>
         </div>

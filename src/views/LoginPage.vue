@@ -1,6 +1,6 @@
 <template>
   <div class="col bg-super-dark">
-    <div class="row center">
+    <div class="r center">
       <div class="loginCard bg-dark">
         <h1 class="center">Inicia Sesión</h1>
         <small>Para acceder a tu contenido</small>
@@ -93,7 +93,7 @@ export default {
   mounted() {
     this.unsubListener = this.firebase.auth.onAuthStateChanged(user => {
       if (user) {
-        this.$router.push("books");
+        this.$router.push("/favorites");
       }
     });
   },
