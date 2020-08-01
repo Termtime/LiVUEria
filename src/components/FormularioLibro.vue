@@ -137,6 +137,7 @@ export default {
           title: this.addTitle,
           year: this.addYear,
           genre: this.addGenre,
+          description: this.addDescription,
           lowerCaseTitle: this.addTitle.toLowerCase()
         });
         console.log(docRef);
@@ -182,6 +183,9 @@ export default {
       this.addTitle = "";
       this.addPosterImg = null;
       this.addGenre = "";
+      this.description = "";
+      jq("#posterImgEditar").val("");
+      jq("#posterImgAgregar").val("");
     },
     async handlerEditar(evt) {
       evt.preventDefault();
@@ -230,6 +234,7 @@ export default {
       this.addTitle = "";
       this.addPosterImg = null;
       this.addGenre = "";
+      this.description = "";
       jq("#posterImgEditar").val("");
       jq("#posterImgAgregar").val("");
     });
