@@ -1,21 +1,28 @@
 <template>
   <div id="app">
-    <AppBar />
-    <router-view />
+    <div>
+      <AppBar />
+      <router-view :key="$route.path" />
+      <Footer />
+    </div>
   </div>
 </template>
+
 <script>
 import AppBarBase from "./components/AppBar.vue";
 import { withFirebase } from "./components/HOC/FirebaseProvider.js";
+import Footer from "./components/Footer.vue";
 
 const AppBar = withFirebase(AppBarBase);
 export default {
-  components: { AppBar }
+  components: { AppBar, Footer }
 };
 </script>
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Mukta:wght@300&display=swap");
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Mukta", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -24,8 +31,10 @@ export default {
   margin: 0;
 }
 
-html {
+html,
+body {
   background-color: #111;
+  font-family: "Mukta", sans-serif;
 }
 
 #nav a {

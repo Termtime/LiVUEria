@@ -1,9 +1,6 @@
 <template>
   <div class="text-left text-dark col">
-    <form
-      v-if="libro !== null || libro !== undefined"
-      v-on:submit="handleBookEdit"
-    >
+    <form v-if="libro !== null || libro !== undefined" v-on:submit="handleBookEdit">
       <label for="Titulo">Titulo</label>
       <input
         class="form-control"
@@ -38,29 +35,22 @@
         </div>
         <div class="form-group mx-2 my-3">
           <label for="categoria">Genero:</label>
-          <select
-            name="categoria"
-            class="form-control mx-1"
-            v-model="addGenre"
-            required
-          >
-            <option value="Ciencia Ficcion">Ciencia Ficcion</option>
+          <select name="categoria" class="form-control mx-1" v-model="addGenre" required>
+            <option value="Ciencia Ficción">Ciencia Ficción</option>
             <option value="Fantasía">Fantasía</option>
             <option value="Aventura">Aventura</option>
             <option value="Drama">Drama</option>
             <option value="Comedia">Comedia</option>
-            <option value="Bibliografico">Bibliografico</option>
-            <option value="Cientifico">Cientifico</option>
+            <option value="Bibliográfico">Bibliográfico</option>
+            <option value="Científico">Científico</option>
+            <option value="Policial">Policial</option>
+            <option value="Tragedia">Tragedia</option>
+            <option value="Romántico">Romántico</option>
           </select>
         </div>
       </div>
       <label for="addPosterImg">Foto de la portada</label>
-      <input
-        type="file"
-        class="form-control-file"
-        id="addPosterImg"
-        accept="image/*"
-      />
+      <input type="file" class="form-control-file" id="addPosterImg" accept="image/*" />
       <br />
       <SubmitButton label="Editar" />
     </form>
@@ -74,7 +64,7 @@ window.jq = jq;
 export default {
   name: "FormularioEditarLibro",
   components: {
-    SubmitButton,
+    SubmitButton
   },
   props: ["libro", "firebase"],
   data: function() {
@@ -85,7 +75,7 @@ export default {
       addYear: "2000",
       addPosterImg: null,
       currentPosterImg: null,
-      addGenre: "",
+      addGenre: ""
     };
   },
   methods: {
@@ -95,7 +85,7 @@ export default {
       //extraer el archivo en una variable
       console.log(fileUpload);
       console.log(fileUpload.files);
-      let file = fileUpload.files > 0 ? fileUpload.files[0] : null;
+      let file = fileUpload.files.length > 0 ? fileUpload.files[0] : null;
 
       console.log(file);
       let newFileUrl = this.currentPosterImg;
@@ -124,11 +114,11 @@ export default {
           year: this.addYear,
           genre: this.addGenre,
           lowerCaseTitle: this.addTitle.toLowerCase(),
-          posterUrl: newFileUrl,
+          posterUrl: newFileUrl
         });
 
       jq("#toggleSeleccionarLibro").tab("show");
-    },
+    }
   },
   mounted() {
     jq("#adminModal").on("hidden.bs.modal", () => {
@@ -160,8 +150,8 @@ export default {
         this.addYear = newVal.year;
         this.currentPosterImg = newVal.posterUrl;
         this.addGenre = newVal.genre;
-      },
-    },
-  },
+      }
+    }
+  }
 };
 </script>

@@ -12,6 +12,8 @@ export default new Vuex.Store({
     isAuthReady: false,
     booksListenerActive: false,
     favoritesListenerActive: false,
+    appbarColor: null,
+    logButtonColor: null,
   },
   mutations: {
     updateFavorites(state, favoritesArray) {
@@ -31,6 +33,12 @@ export default new Vuex.Store({
       );
       state.tempFav.splice(arrayDeleteIndex, 1);
     },
+    updateAppbarColor(state, color) {
+      state.appbarColor = color;
+    },
+    updateLogButtonColor(state, color) {
+      state.logButtonColor = color;
+    },
     shutdownBooksListener(state) {
       state.booksListenerActive = false;
     },
@@ -40,20 +48,31 @@ export default new Vuex.Store({
     login(state) {
       state.isAuth = true;
     },
-    logout(state){
+    logout(state) {
       state.isAuth = false;
     },
-    authIsReady(state){
+    authIsReady(state) {
       state.isAuthReady = true;
-    }
+    },
   },
   getters: {
     getBooks: (state) => {
       return state.books.length > 0 ? state.books : [];
     },
     getFavorites: (state) => {
-      if (state.isAuth) return state.favorites.length > 0 ? state.favorites : [];
+      if (state.isAuth)
+        return state.favorites.length > 0 ? state.favorites : [];
       else return state.tempFav.length > 0 ? state.tempFav : [];
+    },
+    getAppbarColor: (state) => {
+      return state.appbarColor == undefined ||
+        state.appbarColor == null ||
+        state.appbarColor == ""
+        ? "#695555"
+        : state.appbarColor;
+    },
+    getLogButtonColor: (state) => {
+      return (state.logButtonColor = state.logButtonColor); /////////////////////////
     },
   },
   actions: {},

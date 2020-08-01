@@ -11,7 +11,7 @@ const config = {
   projectId: CONFIG.PROJECT_ID,
   storageBucket: CONFIG.STORAGE_BUCKET,
   messagingSenderId: CONFIG.MESSAGING_SENDER_ID,
-  appId: CONFIG.APP_ID
+  appId: CONFIG.APP_ID,
 };
 
 export class Firebase {
@@ -33,7 +33,7 @@ export class Firebase {
     return this.auth.signInWithEmailAndPassword(email, password);
   };
 
-  _loginWithProvider = provider => {
+  _loginWithProvider = (provider) => {
     return this.auth.signInWithPopup(provider);
   };
 
@@ -45,23 +45,23 @@ export class Firebase {
     return this.auth.signOut();
   };
 
-  passwordReset = email => {
+  passwordReset = (email) => {
     return this.auth.sendPasswordResetEmail(email);
   };
 
-  updatePassword = newPassword => {
+  updatePassword = (newPassword) => {
     return this.auth.currentUser.updatePassword(newPassword);
   };
 
-  updateProfileInfo = info => this.auth.currentUser.updateProfile(info);
+  updateProfileInfo = (info) => this.auth.currentUser.updateProfile(info);
 
   //Database and storage Functions
 
-  getUserFavorites = uid =>
+  getUserFavorites = (uid) =>
     this.db.collection("Favorites").where("uid", "==", uid);
 
   allBooksPath = () => this.db.collection("Books");
   getCurrentUserUid = () => this.auth.currentUser.uid;
-  selectCollection = dbPath => this.db.collection(dbPath);
+  selectCollection = (dbPath) => this.db.collection(dbPath);
   getDocRef = (dbPath, docID) => this.db.collection(dbPath).doc(docID);
 }
