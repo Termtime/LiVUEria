@@ -1,17 +1,21 @@
 <template>
   <div id="app">
-    <AppBar />
-    <router-view />
-    <!-- <Footer> -->
+    <div>
+      <AppBar />
+      <router-view :key="$route.path" />
+      <Footer />
+    </div>
   </div>
 </template>
+
 <script>
 import AppBarBase from "./components/AppBar.vue";
 import { withFirebase } from "./components/HOC/FirebaseProvider.js";
+import Footer from "./components/Footer.vue";
 
 const AppBar = withFirebase(AppBarBase);
 export default {
-  components: { AppBar }
+  components: { AppBar, Footer }
 };
 </script>
 <style>

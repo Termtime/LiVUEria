@@ -8,32 +8,24 @@
 
         <!---------------------------------------------------------------->
         <div class="offset-3 col-md-4">
-          <form @submit="filtrarBusqueda">
-            <div class="input-group mb-2 mt-3">
-              <input type="text" class="form-control" placeholder="Buscar" v-model="busquedatxt" />
+          <div class="input-group mb-2 mt-3">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Buscar"
+              v-model="busquedatxt"
+              @input="filtrarBusqueda"
+            />
 
-              <div class="input-group-append">
-                <button class="btn btn-outline-light" type="submit">
-                  <span>
-                    <i class="fas fa-search"></i>
-                  </span>
-                </button>
-              </div>
+            <div class="input-group-append bg-dark" v-show="busquedatxt != ''">
+              <button class="btn btn-outline-light" @click="busquedatxt = ''; filtrarBusqueda()">
+                <span>
+                  <i class="fas fa-times"></i>
+                </span>
+              </button>
             </div>
-          </form>
+          </div>
         </div>
-
-        <button
-          v-if="busquedatxt != ''"
-          type="button"
-          class="btn btn-info col-md-2 m-3"
-          @click="
-            evt => {
-              resultado = null;
-              busquedatxt = '';
-            }
-          "
-        >Limpiar busqueda</button>
       </div>
       <div class="divider">
         <hr color="white" />
