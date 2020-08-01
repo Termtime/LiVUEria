@@ -97,18 +97,21 @@ export default {
     handleSubmit(evt) {
       evt.preventDefault();
       this.firebase
-        .loginWithEmailPassword(this.emailState.email, this.passState.pass)
+        .crecreateUserWithEmailPasswordate(
+          this.emailState.email,
+          this.passState.pass
+        )
         .then(() => this.$router.push("/favorites"))
         .catch(error => {
-          if (error.code === "auth/wrong-password") {
-            this.passState = {
-              ...this.passState,
-              error: "Credenciales invalidas"
-            };
-          } else if (error.code === "auth/user-not-found") {
+          if (error.code === "auth/email-already-in-use") {
             this.emailState = {
               ...this.emailState,
-              error: "Usuario no encontrado"
+              error: "Usuario ya existente"
+            };
+          } else if (error.code === "auth/invalid-email") {
+            this.emailState = {
+              ...this.emailState,
+              error: "Correo Invalido"
             };
           } else if (error.code === "auth/too-many-requests") {
             this.emailState = {
