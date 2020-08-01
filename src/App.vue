@@ -1,8 +1,14 @@
 <template>
   <div id="app">
-    <div>
-      <AppBar />
-      <router-view :key="$route.path" />
+    <div class="body bg-super-dark" >
+      <div id="container">
+        <div id="header">
+          <AppBar />
+        </div>
+        <div>
+          <router-view :key="$route.path" class="router-view" />
+        </div>
+      </div>
       <Footer />
     </div>
   </div>
@@ -116,5 +122,53 @@ body {
 }
 .flex-container {
   display: flex;
+}
+
+/* #container {
+  display: table;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+footer {
+  width: 100%;
+  height: 150px; 
+  display: table-row;
+} */
+
+.footer {
+  justify-content: center;
+}
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-container {
+  width: 80%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.reactive {
+  transition-duration: 0.2s;
+}
+.reactive:hover {
+  transform: scale(1.2);
+}
+
+.body {
+  position: relative;
+  min-height: 100vh;
+}
+
+#container {
+  padding-bottom: 160px;
+}
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 160px;
 }
 </style>

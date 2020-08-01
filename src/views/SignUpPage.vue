@@ -36,10 +36,10 @@
     </div>
     <div class="row center">
       <p style="margin:0; line-height:40px; padding-right:20px;">
-        Already have an account?
+        ¿Ya tienes una cuenta?
       </p>
       <button class="btn btn-info my-2 my-sm-0" @click="$router.push('signin')">
-        Sign In
+        Inicia Sesión
       </button>
     </div>
   </div>

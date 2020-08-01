@@ -1,6 +1,6 @@
 <template>
   <div class="col bg-super-dark">
-    <div class="row center">
+    <div class="r center">
       <div class="loginCard bg-dark">
         <h1 class="center">Inicia Sesión</h1>
         <small>Para acceder a tu contenido</small>

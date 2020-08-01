@@ -2,7 +2,11 @@
   <div v-if="listaLibros.length !== 0" class="section">
     <div class="card-container">
       <div v-for="libro in listaModificada" :key="libro.id" class="card-unit">
-        <span :id="libro.id" class="icon-red r top-right-corner" @click="toggleFavorite">
+        <span
+          :id="libro.id"
+          class="icon-red r top-right-corner"
+          @click="toggleFavorite"
+        >
           <i
             :class="
               `${
@@ -40,6 +44,7 @@
 
 <script>
 import noimg from "../assets/nobookimg.png";
+
 export default {
   name: "BookCard",
   data: function() {
@@ -117,6 +122,26 @@ export default {
       );
       return listaMod;
     }
+  },
+  mounted() {
+    const images = document.getElementsByTagName("img");
+    for (let image of images) {
+      if (
+        image.onload == null &&
+        !image.classList.contains("a-img") &&
+        image.id != "posterLibro"
+      ) {
+        image.addEventListener("load", fadeImg);
+        image.style.opacity = "0";
+      }
+    }
+
+    function fadeImg() {
+      this.style.transition = "opacity 2s";
+      this.style.opacity = "1";
+    }
+
+    window.scrollTo(0,0);
   }
 };
 </script>

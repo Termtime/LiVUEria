@@ -163,6 +163,7 @@ export default {
   object-fit: contain;
   border-radius: 5%;
   margin-bottom: 0px;
+  transition-duration: 0.5s;
 }
 .reactive-card:hover {
   transform: scale(1.02);
