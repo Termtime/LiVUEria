@@ -8,9 +8,7 @@
             <p>Explora nuestro contenido</p>
           </div>
           <div class="r center">
-            <button class="btn btn-primary" @click="$router.push('library')">
-              Ir a la libreria
-            </button>
+            <button class="btn btn-primary" @click="$router.push('/libreria')">Ir a la libreria</button>
           </div>
         </div>
       </div>

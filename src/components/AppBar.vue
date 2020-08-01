@@ -3,8 +3,9 @@
     <div v-if="isAdmin">
       <AdministratePanel />
     </div>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <span class="navbar-brand link" @click="$router.push('/')">LiVUEria</span>
+    <nav class="navbar navbar-expand-lg navbar-dark" id="appbar">
+      <span class="navbar-brand link" id="item1" @click="$router.push('/')">LiVUEria</span>
+      <!---------->
       <button
         class="navbar-toggler"
         type="button"
@@ -22,17 +23,18 @@
           <li class="nav-item active">
             <span
               v-if="Boolean(loggedUser)"
-              class="nav-link link"
+              class="navbar-brand link"
+              id="item2"
               v-on:click="handleHomeClick"
             >
               Mis libros
               <span class="sr-only">(current)</span>
+              <!---------->
             </span>
           </li>
-          <li class="nav-item">
-            <a class="nav-link link" @click="$router.push('libreria')"
-              >Librería</a
-            >
+          <li class="nav-item" id="item3">
+            <span class="navbar-brand link center" @click="$router.push('/libreria')">Librería</span>
+            <!---------->
           </li>
         </ul>
         <div v-if="!Boolean(loggedUser)" class="r">
@@ -40,23 +42,16 @@
             <button
               class="btn btn-primary my-2 my-sm-0"
               @click="$router.push('signin')"
-            >
-              Inicia sesíon
-            </button>
+            >Inicia sesíon</button>
           </div>
           <div class="inline-right-margin">
-            <button
-              class="btn btn-info my-2 my-sm-0"
-              @click="$router.push('signup')"
-            >
-              Registrate
-            </button>
+            <button class="btn btn-info my-2 my-sm-0" @click="$router.push('signup')">Registrate</button>
           </div>
         </div>
         <div class="r inline-right-margin" v-else>
-          <li class="nav-item dropdown list-unstyled">
+          <li class="nav-item dropdown list-unstyled dropleft">
             <a
-              class="btn btn-primary dropdown-toggle"
+              class="btn btn-dark dropdown-toggle"
               href="#"
               id="navbarDropdown"
               role="button"
@@ -65,27 +60,24 @@
               aria-expanded="false"
             >
               {{
-                isAuthReady
-                  ? loggedUser.displayName == null
-                    ? loggedUser.email.substring(
-                        0,
-                        loggedUser.email.indexOf("@")
-                      )
-                    : loggedUser.displayName
-                  : null
+              isAuthReady
+              ? loggedUser.displayName == null
+              ? loggedUser.email.substring(
+              0,
+              loggedUser.email.indexOf("@")
+              )
+              : loggedUser.displayName
+              : null
               }}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <span class="dropdown-item link" v-on:click="logout"
-                >Cerrar sesión</span
-              >
+              <span class="dropdown-item link" v-on:click="logout">Cerrar sesión</span>
 
               <span
                 v-if="isAdmin"
                 class="dropdown-item link"
                 v-on:click="openAdminModal"
-                >Administrar libros</span
-              >
+              >Administrar libros</span>
             </div>
           </li>
         </div>
@@ -119,9 +111,28 @@ export default {
     };
   },
   props: ["firebase"],
+  computed: {
+    appbarColor() {
+      console.log(this.$store.getters.getAppbarColor);
+      return this.$store.getters.getAppbarColor;
+    },
+    logButtonColor() {
+      return this.$store.getters.getLogButtonColor;
+    }
+  },
+  watch: {
+    appbarColor: function(nuevoColor) {
+      this.setAppbarColor(nuevoColor);
+      console.log("nuevo color de navbar watch " + nuevoColor);
+    },
+    logButtonColor: function(nuevoColor) {
+      this.setLogButtonColor(nuevoColor);
+      console.log("nuevo color de logButton watch " + nuevoColor);
+    }
+  },
   methods: {
     handleHomeClick() {
-      this.$router.push("books");
+      this.$router.push("/books");
     },
     logout() {
       this.firebase.signOut().then(() => this.$router.push("signin"));
@@ -129,6 +140,15 @@ export default {
     openAdminModal() {
       console.log("trying to open modal");
       jq("#adminModal").modal("show");
+    },
+    // cambiando el color de la navbar y del boton segun el libro que se seleccione
+    setAppbarColor(color) {
+      console.log(`El color de de la navbar ahora es ${color}`);
+      jq("#appbar").css("background-color", color);
+    },
+    setLogButtonColor(color) {
+      console.log(`El color del logButton ahora es ${color}`);
+      jq("#navbarDropdown").css("background-color", color);
     }
   },
   mounted() {
@@ -176,6 +196,8 @@ export default {
       this.isAuthReady = true;
       this.$store.commit("authIsReady");
     });
+
+    this.setAppbarColor(this.$store.getters.getAppbarColor);
   },
   beforeDestroy() {
     //desuscribir el listener para evitar memory leaks y errores
@@ -183,3 +205,10 @@ export default {
   }
 };
 </script>
+
+<style>
+#navbarDropdown {
+  background-color: #8c7171;
+  border: none;
+}
+</style>

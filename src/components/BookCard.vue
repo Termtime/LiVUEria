@@ -1,12 +1,8 @@
 <template>
   <div v-if="listaLibros.length !== 0" class="section">
-    <div class="card-container ">
+    <div class="card-container">
       <div v-for="libro in listaModificada" :key="libro.id" class="card-unit">
-        <span
-          :id="libro.id"
-          class="icon-red r top-right-corner"
-          @click="toggleFavorite"
-        >
+        <span :id="libro.id" class="icon-red r top-right-corner" @click="toggleFavorite">
           <i
             :class="
               `${
@@ -17,7 +13,7 @@
           <!-- <i
             class="fas fa-heart icon-lg"
             v-if="libro.hasOwnProperty('esFav')"
-          ></i> -->
+          ></i>-->
         </span>
         <div
           class="card reactive-card shadow center"
@@ -30,11 +26,11 @@
             alt="..."
           />
           <div class="card-body text-left">
-            <h5 class="card-title text-dark">{{ libro.title }}</h5>
-            <h6 class="card-subtitle text-dark">{{ libro.year }}</h6>
-            <p class="card-text text-dark">
-              {{ libro.description }}
-            </p>
+            <h5 class="card-title text-dark">
+              {{ libro.title }}
+              <h6 style="font-size: 13px">{{ libro.genre }}</h6>
+            </h5>
+            <h6 class="card-subtitle text-dark">{{ libro.author }}</h6>
           </div>
         </div>
       </div>
@@ -99,6 +95,9 @@ export default {
       } else {
         this.$store.commit("removeFavoriteWithID", libroID);
       }
+    },
+    goToBook(bookID) {
+      this.$router.push(`/library/book/${bookID}`);
     }
   },
   computed: {

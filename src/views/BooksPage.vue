@@ -10,12 +10,8 @@
     </div>
 
     <div v-if="favoriteBooks.length !== 0" class="section">
-      <div class="card-container ">
-        <div
-          v-for="book in favoriteBooks"
-          :key="book.favoritesEntryID"
-          class="card-unit"
-        >
+      <div class="card-container">
+        <div v-for="book in favoriteBooks" :key="book.favoritesEntryID" class="card-unit">
           <span
             :id="book.id + '-star'"
             class="icon-red r top-right-corner"
@@ -36,9 +32,7 @@
             <div class="card-body text-left">
               <h5 class="card-title text-dark">{{ book.title }}</h5>
               <h6 class="card-subtitle text-dark">{{ book.year }}</h6>
-              <p class="card-text text-dark">
-                {{ book.description }}
-              </p>
+              <p class="card-text text-dark">{{ book.description }}</p>
             </div>
           </div>
         </div>
@@ -159,6 +153,7 @@ export default {
   transition-duration: 0.2s;
   display: flex;
   margin: 1%;
+  margin-bottom: 50px;
   height: 525px;
   padding: 5px;
 }
@@ -167,6 +162,7 @@ export default {
   height: 400px;
   object-fit: contain;
   border-radius: 5%;
+  margin-bottom: 0px;
 }
 .reactive-card:hover {
   transform: scale(1.02);
@@ -176,7 +172,7 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .r {
