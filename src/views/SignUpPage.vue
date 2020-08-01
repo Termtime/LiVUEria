@@ -97,10 +97,7 @@ export default {
     handleSubmit(evt) {
       evt.preventDefault();
       this.firebase
-        .crecreateUserWithEmailPasswordate(
-          this.emailState.email,
-          this.passState.pass
-        )
+        .createUserWithEmailPassword(this.emailState.email, this.passState.pass)
         .then(() => this.$router.push("/favorites"))
         .catch(error => {
           if (error.code === "auth/email-already-in-use") {
