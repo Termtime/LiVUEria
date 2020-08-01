@@ -93,7 +93,7 @@ export default {
   mounted() {
     this.unsubListener = this.firebase.auth.onAuthStateChanged(user => {
       if (user) {
-        this.$router.push("books");
+        this.$router.push("/favorites");
       }
     });
   },

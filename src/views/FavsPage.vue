@@ -9,7 +9,7 @@
       </div>
     </div>
 
-    <div v-if="favoriteBooks.length !== 0" class="section">
+    <!-- <div v-if="favoriteBooks.length !== 0" class="section">
       <div class="card-container">
         <div v-for="book in favoriteBooks" :key="book.favoritesEntryID" class="card-unit">
           <span
@@ -37,15 +37,17 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
+    <BookCard :firebase="firebase" :listaLibros="favoriteBooks"/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import noimg from "../assets/nobookimg.png";
+import BookCard from "../components/BookCard.vue";
 export default {
-  name: "BooksPage",
+  name: "FavsPage",
   data: function() {
     return {
       removeFavoritesList: [],
@@ -53,7 +55,7 @@ export default {
     };
   },
   props: ["firebase"],
-  components: {},
+  components: {BookCard},
   methods: {
     removeAllDiscardedBooks() {
       if (this.removeFavoritesList.length === 0) return;

@@ -229,4 +229,9 @@ img {
 #tag3 {
   transition-duration: 0.5s;
 }
+
+#posterLibro{
+  object-fit: cover;
+  max-width: 100%;
+}
 </style>

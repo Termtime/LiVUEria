@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import BooksPage from "../views/BooksPage.vue";
+import FavsPage from "../views/FavsPage.vue";
 import LoginPage from "../views/LoginPage.vue";
 import SignUpPage from "../views/SignUpPage.vue";
 import LandingPage from "../views/LandingPage.vue";
@@ -16,9 +16,9 @@ const routes = [
     component: LandingPage,
   },
   {
-    path: "/books",
-    name: "Books",
-    component: withFirebase(BooksPage),
+    path: "/favorites",
+    name: "favs",
+    component: withFirebase(FavsPage),
   },
   {
     path: "/about",

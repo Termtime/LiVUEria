@@ -98,7 +98,7 @@ export default {
       evt.preventDefault();
       this.firebase
         .loginWithEmailPassword(this.emailState.email, this.passState.pass)
-        .then(() => this.$router.push("home"))
+        .then(() => this.$router.push("/favorites"))
         .catch(error => {
           if (error.code === "auth/wrong-password") {
             this.passState = {
