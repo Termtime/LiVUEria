@@ -8,11 +8,11 @@
         <div class="r font-italic">
           <div class="mr-3">
             <h5>Andrea Nohemy Archila Cáceres</h5>
-            <h5>Mario Fernando Mejía Inestrosa</h5>
+            <h5>Mario Fernando Mejía Inestroza</h5>
           </div>
           <div class="">
             <h5>nohemy.archila99@gmail.com</h5>
-            <h5>mariofer_mejia@hotmail.com</h5>
+            <h5>mariofermejia99@gmail.com</h5>
           </div>
         </div>
       </div>
