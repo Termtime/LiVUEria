@@ -1,22 +1,25 @@
-# biblioteca-libros-tallervuejs
+# LiVUEria
 
-## DEMO
+Final project of a short extracurricular workshop about Vue & serverless architecture
+
+## Demo link
 
 https://livueria.web.app/#/
 
-* Landing Page
+## Image Gallery
+### Landing Page
 
 ![landingPage](https://i.imgur.com/nTDYuto.png)
 
-* Library
+### Library
 
 ![library](https://i.imgur.com/fjDfdoW.png)
 
-* Favorites
+### Favorites
 
 ![favorites](https://i.imgur.com/iLLv8Kf.png)
 
-* Book Description
+### Book Description
 
 ![bookDescription](https://i.imgur.com/ep8Fehd.png)
 
